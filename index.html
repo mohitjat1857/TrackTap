@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Location Access</title>
+</head>
+<body>
+  <h2>Please allow location access</h2>
+  <script>
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      // Send the location to your server
+      fetch("https://your-backend-url.com/save-location", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ latitude: lat, longitude: lon })
+      });
+
+      document.body.innerHTML += `<p>Location sent: ${lat}, ${lon}</p>`;
+    }, function(error) {
+      alert("Location access denied.");
+    });
+  </script>
+</body>
+</html>
